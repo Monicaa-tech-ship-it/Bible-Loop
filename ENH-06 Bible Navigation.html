@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bible — UI Mockups</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Lora:ital,wght@0,400;0,500;1,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.1.0/tabler-icons.min.css">
+<style>
+  :root{
+    --cream:#FBF7EF;
+    --paper:#FFFFFF;
+    --ink:#2B2A26;
+    --ink-soft:#7A776E;
+    --ink-faint:#B3AFA3;
+    --blue:#6E93BE;
+    --blue-deep:#3E5E85;
+    --blue-tint:#EAF1F8;
+    --blue-tint-2:#DCE9F5;
+    --gold:#C6A667;
+    --gold-deep:#9C7B3D;
+    --gold-tint:#F6EFDD;
+    --border:#EDE7D8;
+    --border-soft:#F1ECE0;
+    --radius-xl:28px;
+    --radius-lg:20px;
+    --radius-md:14px;
+    --radius-sm:10px;
+    --shadow-card:0 2px 10px rgba(60,52,32,0.05), 0 10px 24px rgba(60,52,32,0.05);
+    --shadow-soft:0 1px 3px rgba(60,52,32,0.05);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:#EFEAE0;
+    font-family:'Manrope',sans-serif;
+    color:var(--ink);
+    padding:48px 32px 120px;
+  }
+  .board-head{
+    max-width:1400px;
+    margin:0 auto 40px;
+  }
+  .board-head h1{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:30px;
+    margin:0 0 6px;
+    letter-spacing:-0.01em;
+  }
+  .board-head p{
+    color:var(--ink-soft);
+    font-size:14px;
+    margin:0;
+  }
+  .board{
+    max-width:1400px;
+    margin:0 auto;
+    display:flex;
+    flex-wrap:wrap;
+    gap:40px 32px;
+  }
+  figure.screen{
+    margin:0;
+    width:300px;
+  }
+  figure.screen figcaption{
+    font-size:12px;
+    font-weight:600;
+    color:var(--ink-soft);
+    letter-spacing:0.02em;
+    margin-bottom:12px;
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+  }
+  figure.screen figcaption .num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:18px;height:18px;
+    border-radius:50%;
+    background:var(--blue);
+    color:#fff;
+    font-size:10px;
+    font-weight:700;
+  }
+
+  /* ---- phone frame ---- */
+  .phone{
+    width:300px;
+    height:650px;
+    background:var(--ink);
+    border-radius:38px;
+    padding:10px;
+    box-shadow:0 20px 50px rgba(30,26,18,0.28);
+    position:relative;
+  }
+  .phone .screen-inner{
+    width:100%;
+    height:100%;
+    background:var(--cream);
+    border-radius:30px;
+    overflow:hidden;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+  }
+  .notch{
+    position:absolute;
+    top:10px; left:50%;
+    transform:translateX(-50%);
+    width:90px; height:22px;
+    background:var(--ink);
+    border-radius:0 0 14px 14px;
+    z-index:5;
+  }
+  .statusbar{
+    height:34px;
+    flex:0 0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
+    font-size:11px;
+    font-weight:600;
+    color:var(--ink);
+  }
+  .statusbar .icons{display:flex; gap:4px; align-items:center; font-size:12px;}
+  .content{
+    flex:1 1 auto;
+    overflow:hidden;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+  }
+  .scroll{
+    flex:1 1 auto;
+    overflow-y:auto;
+    padding:14px 16px 10px;
+  }
+  .scroll::-webkit-scrollbar{display:none;}
+
+  /* ---- shared UI bits ---- */
+  .top-header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:2px 2px 14px;
+  }
+  .top-header h2{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:22px;
+    margin:0;
+    color:var(--ink);
+  }
+  .top-header .actions{display:flex; gap:8px;}
+  .icon-btn{
+    width:32px;height:32px;
+    border-radius:50%;
+    background:var(--paper);
+    border:0.5px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--blue-deep);
+    font-size:15px;
+  }
+  .card{
+    background:var(--paper);
+    border-radius:var(--radius-lg);
+    border:0.5px solid var(--border-soft);
+    box-shadow:var(--shadow-card);
+  }
+  .section-title{
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin:18px 2px 10px;
+  }
+  .pill{
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:10.5px;
+    font-weight:600;
+  }
+  .pill.blue{background:var(--blue-tint); color:var(--blue-deep);}
+  .pill.gold{background:var(--gold-tint); color:var(--gold-deep);}
+
+  .bottomnav{
+    flex:0 0 auto;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    padding:8px 6px 12px;
+    background:var(--paper);
+    border-top:0.5px solid var(--border-soft);
+  }
+  .navitem{
+    display:flex; flex-direction:column; align-items:center; gap:3px;
+    font-size:9.5px;
+    color:var(--ink-faint);
+    font-weight:600;
+  }
+  .navitem i{font-size:19px;}
+  .navitem.active{color:var(--blue-deep);}
+  .navitem.active i{color:var(--blue-deep);}
+
+  /* Screen 1: home */
+  .continue-card{
+    padding:16px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    background:linear-gradient(0deg,var(--paper),var(--paper));
+  }
+  .continue-top{display:flex; align-items:center; justify-content:space-between;}
+  .continue-top .label{font-size:10.5px; font-weight:700; letter-spacing:0.04em; color:var(--blue-deep); text-transform:uppercase;}
+  .continue-title{font-family:'Fraunces',serif; font-size:19px; font-weight:500; margin:0;}
+  .continue-sub{font-size:12px; color:var(--ink-soft); margin:0;}
+  .progress-row{display:flex; align-items:center; gap:10px;}
+  .progress-track{flex:1; height:5px; background:var(--blue-tint); border-radius:6px; overflow:hidden;}
+  .progress-fill{height:100%; width:63%; background:var(--blue);}
+  .progress-pct{font-size:10.5px; color:var(--ink-soft); font-weight:600;}
+  .resume-btn{
+    align-self:flex-start;
+    background:var(--blue-deep);
+    color:#fff;
+    border:none;
+    padding:9px 18px;
+    border-radius:20px;
+    font-size:12.5px;
+    font-weight:600;
+    font-family:'Manrope',sans-serif;
+    display:flex; align-items:center; gap:6px;
+  }
+
+  .testament-row{display:flex; gap:12px;}
+  .testament-card{
+    flex:1;
+    padding:16px 14px;
+    display:flex; flex-direction:column; gap:26px;
+  }
+  .testament-card .tcount{font-size:10.5px; color:var(--ink-soft); font-weight:600;}
+  .testament-card h3{font-family:'Fraunces',serif; font-size:16px; font-weight:500; margin:0 0 2px;}
+  .testament-card i{font-size:20px; color:var(--blue-deep);}
+  .testament-card.old{background:var(--blue-tint);}
+  .testament-card.old i{color:var(--blue-deep);}
+  .testament-card.new{background:var(--gold-tint);}
+  .testament-card.new i{color:var(--gold-deep);}
+
+  .quick-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  .quick-item{
+    padding:12px;
+    display:flex; align-items:center; gap:9px;
+    font-size:12px;
+    font-weight:600;
+  }
+  .quick-item i{
+    width:30px;height:30px;
+    border-radius:9px;
+    background:var(--blue-tint);
+    color:var(--blue-deep);
+    display:flex;align-items:center;justify-content:center;
+    font-size:15px;
+    flex:0 0 auto;
+  }
+
+  .recent-scroll{display:flex; gap:10px; overflow-x:auto; padding-bottom:2px;}
+  .recent-scroll::-webkit-scrollbar{display:none;}
+  .recent-book{
+    flex:0 0 auto;
+    width:84px; height:100px;
+    border-radius:var(--radius-md);
+    background:var(--paper);
+    border:0.5px solid var(--border-soft);
+    display:flex; flex-direction:column; justify-content:flex-end;
+    padding:10px 10px;
+    position:relative;
+  }
+  .recent-book .bar{width:22px;height:3px;border-radius:3px;background:var(--blue); margin-bottom:8px;}
+  .recent-book span{font-size:11.5px; font-weight:600;}
+
+  /* Screen 2: books list */
+  .search-bar{
+    display:flex; align-items:center; gap:8px;
+    background:var(--paper);
+    border:0.5px solid var(--border-soft);
+    border-radius:14px;
+    padding:9px 12px;
+    color:var(--ink-faint);
+    font-size:13px;
+    margin-bottom:14px;
+  }
+  .list-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:13px 14px;
+    background:var(--paper);
+    border:0.5px solid var(--border-soft);
+    border-radius:var(--radius-md);
+    margin-bottom:8px;
+  }
+  .list-row .lname{font-size:14.5px; font-weight:600;}
+  .list-row .lmeta{font-size:11px; color:var(--ink-faint);}
+  .list-row.current{border:1px solid var(--blue); background:var(--blue-tint);}
+  .alpha-jump{
+    position:absolute;
+    right:6px; top:70px; bottom:74px;
+    display:flex; flex-direction:column; justify-content:space-between;
+    font-size:8px; font-weight:700; color:var(--ink-faint);
+    padding:2px 0;
+  }
+
+  /* Screen 3: chapter grid */
+  .chapter-head{
+    text-align:center;
+    padding:6px 0 16px;
+  }
+  .chapter-head h2{font-family:'Fraunces',serif; font-size:26px; font-weight:500; margin:0;}
+  .chapter-head p{font-size:12px; color:var(--ink-soft); margin:4px 0 0;}
+  .chapter-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:9px;
+  }
+  .chapter-cell{
+    aspect-ratio:1;
+    border-radius:14px;
+    background:var(--paper);
+    border:0.5px solid var(--border-soft);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif;
+    font-size:16px;
+    font-weight:500;
+  }
+  .chapter-cell.current{background:var(--blue-deep); color:#fff; border:none;}
+  .chapter-cell.read{background:var(--blue-tint); color:var(--blue-deep); border:none;}
+
+  /* Screen 4: reading */
+  .read-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:2px 2px 6px;
+  }
+  .read-head .titles{}
+  .read-head .book{font-family:'Fraunces',serif; font-size:12px; color:var(--ink-soft); margin:0;}
+  .read-head .chap{font-family:'Fraunces',serif; font-size:21px; font-weight:500; margin:0;}
+  .translation-chip{
+    display:flex; align-items:center; gap:4px;
+    background:var(--blue-tint); color:var(--blue-deep);
+    padding:6px 10px; border-radius:16px;
+    font-size:12px; font-weight:700;
+  }
+  .read-toolbar{
+    display:flex; gap:8px; padding:8px 2px 14px;
+    border-bottom:0.5px solid var(--border-soft);
+    margin-bottom:12px;
+  }
+  .verse-text{
+    font-family:'Lora',serif;
+    font-size:15.5px;
+    line-height:1.85;
+    color:var(--ink);
+  }
+  .verse-text .vnum{
+    font-family:'Manrope',sans-serif;
+    font-size:10px;
+    font-weight:700;
+    color:var(--blue-deep);
+    vertical-align:super;
+    margin-right:3px;
+  }
+  .verse-text p{margin:0 0 14px;}
+  .verse-text p.highlighted{background:var(--gold-tint); border-radius:6px; padding:2px 6px; margin:0 -6px 14px;}
+  .fab{
+    position:absolute;
+    right:16px; bottom:16px;
+    width:44px;height:44px;
+    border-radius:50%;
+    background:var(--blue-deep);
+    color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:18px;
+    box-shadow:0 6px 16px rgba(62,94,133,0.35);
+  }
+
+  /* Screen 5: bottom sheet */
+  .sheet-backdrop{
+    position:absolute; inset:0;
+    background:rgba(43,42,38,0.42);
+    display:flex; align-items:flex-end;
+  }
+  .sheet{
+    width:100%;
+    background:var(--paper);
+    border-radius:24px 24px 0 0;
+    padding:10px 16px 18px;
+  }
+  .sheet .grabber{width:36px;height:4px;border-radius:3px;background:var(--border);margin:2px auto 14px;}
+  .sheet .verse-preview{
+    font-family:'Lora',serif; font-size:13px; color:var(--ink-soft);
+    padding:0 2px 14px; border-bottom:0.5px solid var(--border-soft); margin-bottom:6px;
+  }
+  .sheet-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:4px;}
+  .sheet-item{
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+    padding:10px 4px;
+    font-size:10.5px; font-weight:600; color:var(--ink);
+    border-radius:12px;
+  }
+  .sheet-item i{font-size:19px; color:var(--blue-deep);}
+
+  /* Screen 6: search */
+  .chip-row{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:4px;}
+  .search-chip{
+    padding:7px 13px; border-radius:16px;
+    background:var(--paper); border:0.5px solid var(--border-soft);
+    font-size:12px; font-weight:600;
+  }
+  .recent-search-row{display:flex; align-items:center; gap:10px; padding:9px 2px; font-size:13px; color:var(--ink-soft);}
+  .recent-search-row i{font-size:14px; color:var(--ink-faint);}
+  .result-group-title{font-size:10.5px; font-weight:700; color:var(--ink-faint); text-transform:uppercase; letter-spacing:0.05em; margin:14px 2px 8px;}
+  .result-row{padding:11px 14px; background:var(--paper); border-radius:var(--radius-md); border:0.5px solid var(--border-soft); margin-bottom:7px;}
+  .result-row .rtitle{font-size:13px; font-weight:700; margin-bottom:2px;}
+  .result-row .rtext{font-family:'Lora',serif; font-size:12.5px; color:var(--ink-soft); line-height:1.5;}
+  .result-row .rtext mark{background:var(--gold-tint); color:var(--gold-deep); border-radius:3px; padding:0 2px;}
+
+  /* Screen 7: translation modal */
+  .modal-backdrop{
+    position:absolute; inset:0;
+    background:rgba(43,42,38,0.42);
+    display:flex; align-items:center; justify-content:center;
+    padding:24px;
+  }
+  .modal-card{
+    width:100%;
+    background:var(--paper);
+    border-radius:22px;
+    padding:16px 16px 8px;
+  }
+  .modal-card h3{font-family:'Fraunces',serif; font-size:17px; font-weight:500; margin:2px 4px 12px;}
+  .trans-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:11px 10px; border-radius:12px; margin-bottom:4px;
+  }
+  .trans-row.selected{background:var(--blue-tint);}
+  .trans-row .tcode{font-weight:700; font-size:13.5px; width:52px;}
+  .trans-row .tname{font-size:11.5px; color:var(--ink-soft); flex:1;}
+  .trans-row i{color:var(--blue-deep); font-size:16px;}
+
+  /* Screen 8: audio player */
+  .audio-art{
+    width:100%; aspect-ratio:1;
+    border-radius:22px;
+    background:linear-gradient(155deg,var(--blue-tint-2),var(--gold-tint));
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:18px;
+    position:relative;
+    overflow:hidden;
+  }
+  .audio-art i{font-size:52px; color:var(--blue-deep); opacity:0.5;}
+  .audio-titles{text-align:center; margin-bottom:18px;}
+  .audio-titles h2{font-family:'Fraunces',serif; font-size:20px; font-weight:500; margin:0;}
+  .audio-titles p{font-size:12px; color:var(--ink-soft); margin:4px 0 0;}
+  .audio-progress{padding:0 2px 6px;}
+  .audio-track{height:4px; border-radius:4px; background:var(--blue-tint); position:relative; margin-bottom:6px;}
+  .audio-track .fill{position:absolute; left:0; top:0; height:100%; width:38%; background:var(--blue-deep); border-radius:4px;}
+  .audio-track .knob{position:absolute; left:38%; top:50%; transform:translate(-50%,-50%); width:12px;height:12px;border-radius:50%; background:var(--blue-deep);}
+  .audio-times{display:flex; justify-content:space-between; font-size:10.5px; color:var(--ink-faint); font-weight:600;}
+  .audio-controls{display:flex; align-items:center; justify-content:center; gap:22px; margin:18px 0;}
+  .audio-controls .play{
+    width:56px;height:56px; border-radius:50%; background:var(--blue-deep); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-size:22px;
+  }
+  .audio-controls .side{font-size:22px; color:var(--ink); position:relative;}
+  .audio-controls .side .n{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:8px; font-weight:700;}
+  .audio-meta-row{display:flex; justify-content:space-around; padding-top:8px; border-top:0.5px solid var(--border-soft);}
+  .audio-meta-row .am{display:flex; flex-direction:column; align-items:center; gap:4px; font-size:10px; font-weight:600; color:var(--ink-soft);}
+  .audio-meta-row .am i{font-size:17px; color:var(--blue-deep);}
+</style>
+</head>
+<body>
+
+<div class="board-head">
+  <h1>Bible — screen flow</h1>
+  <p>Home → Books → Chapters → Reading, with search, translations and audio · soft blue on cream, Material Design 3</p>
+</div>
+
+<div class="board">
+
+  <!-- SCREEN 1 -->
+  <figure class="screen">
+    <figcaption><span class="num">1</span>Bible home</figcaption>
+    <div class="phone"><div class="screen-inner">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="icons"><i class="ti ti-signal-4"></i><i class="ti ti-wifi"></i><i class="ti ti-battery-4"></i></span></div>
+      <div class="content">
+        <div class="scroll">
+          <div class="top-header">
+            <h2>Bible</h2>
+            <div class="actions">
+              <div class="icon-btn"><i class="ti ti-search"></i></div>
+              <div class="icon-btn"><i class="ti ti-headphones"></i></div>
+              <div class="icon-btn"><i class="ti ti-dots"></i></div>
+            </div>
+          </div>
+
+          <div class="card continue-card">
+            <div class="continue-top">
+              <span class="label">Continue reading</span>
+              <i class="ti ti-bookmark-filled" style="color:var(--blue-deep); font-size:15px;"></i>
+            </div>
+            <div>
+              <p class="continue-title">Joshua 22</p>
+              <p class="continue-sub">Continue from verse 15</p>
+            </div>
+            <div class="progress-row">
+              <div class="progress-track"><div class="progress-fill"></div></div>
+              <span class="progress-pct">63%</span>
+            </div>
+            <button class="resume-btn">Resume reading <i class="ti ti-arrow-right"></i></button>
+          </div>
+
+          <div class="section-title">Bible books</div>
+          <div class="testament-row">
+            <div class="card testament-card old">
+              <i class="ti ti-scroll"></i>
+              <div><h3>Old Testament</h3><span class="tcount">39 books</span></div>
+            </div>
+            <div class="card testament-card new">
+              <i class="ti ti-cross"></i>
+              <div><h3>New Testament</h3><span class="tcount">27 books</span></div>
+            </div>
+          </div>
+
+          <div class="section-title">Quick access</div>
+          <div class="quick-grid">
+            <div class="card quick-item"><i class="ti ti-heart"></i>Favorites</div>
+            <div class="card quick-item"><i class="ti ti-bookmark"></i>Saved verses</div>
+            <div class="card quick-item"><i class="ti ti-brain"></i>Memorized</div>
+            <div class="card quick-item"><i class="ti ti-calendar-event"></i>Reading plans</div>
+            <div class="card quick-item"><i class="ti ti-sun"></i>Verse of the day</div>
+            <div class="card quick-item"><i class="ti ti-history"></i>Recently read</div>
+          </div>
+
+          <div class="section-title">Recent books</div>
+          <div class="recent-scroll">
+            <div class="recent-book"><div class="bar"></div><span>Genesis</span></div>
+            <div class="recent-book"><div class="bar"></div><span>Psalms</span></div>
+            <div class="recent-book"><div class="bar"></div><span>Proverbs</span></div>
+            <div class="recent-book"><div class="bar"></div><span>Matthew</span></div>
+            <div class="recent-book"><div class="bar"></div><span>John</span></div>
+          </div>
+        </div>
+        <div class="bottomnav">
+          <div class="navitem"><i class="ti ti-home"></i>Home</div>
+          <div class="navitem active"><i class="ti ti-book-2"></i>Bible</div>
+          <div class="navitem"><i class="ti ti-users"></i>Community</div>
+          <div class="navitem"><i class="ti ti-hand-love-you"></i>Prayer</div>
+          <div class="navitem"><i class="ti ti-user-circle"></i>Profile</div>
+        </div>
+      </div>
+    </div></div>
+  </figure>
+
+  <!-- SCREEN 2 -->
+  <figure class="screen">
+    <figcaption><span class="num">2</span>Bible books — Old Testament</figcaption>
+    <div class="phone"><div class="screen-inner">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="icons"><i class="ti ti-signal-4"></i><i class="ti ti-wifi"></i><i class="ti ti-battery-4"></i></span></div>
+      <div class="content">
+        <div class="scroll" style="position:relative;">
+          <div class="top-header">
+            <div>
+              <p style="font-size:11px; color:var(--ink-faint); margin:0 0 2px; font-weight:600;"><i class="ti ti-chevron-left"></i> Bible</p>
+              <h2>Old Testament</h2>
+            </div>
+          </div>
+          <p style="font-size:12px; color:var(--ink-soft); margin:0 0 12px;">39 books</p>
+          <div class="search-bar"><i class="ti ti-search"></i>Search books</div>
+
+          <div class="list-row"><span class="lname">Genesis</span><span class="lmeta">50 ch</span></div>
+          <div class="list-row"><span class="lname">Exodus</span><span class="lmeta">40 ch</span></div>
+          <div class="list-row"><span class="lname">Leviticus</span><span class="lmeta">27 ch</span></div>
+          <div class="list-row"><span class="lname">Numbers</span><span class="lmeta">36 ch</span></div>
+          <div class="list-row"><span class="lname">Deuteronomy</span><span class="lmeta">34 ch</span></div>
+          <div class="list-row current"><span class="lname">Joshua</span><span class="lmeta" style="color:var(--blue-deep);">24 ch</span></div>
+          <div class="list-row"><span class="lname">Judges</span><span class="lmeta">21 ch</span></div>
+          <div class="list-row"><span class="lname">Ruth</span><span class="lmeta">4 ch</span></div>
+          <div class="list-row"><span class="lname">1 Samuel</span><span class="lmeta">31 ch</span></div>
+          <div class="alpha-jump"><span>A</span><span>D</span><span>G</span><span>J</span><span>L</span><span>N</span><span>R</span><span>S</span></div>
+        </div>
+        <div class="bottomnav">
+          <div class="navitem"><i class="ti ti-home"></i>Home</div>
+          <div class="navitem active"><i class="ti ti-book-2"></i>Bible</div>
+          <div class="navitem"><i class="ti ti-users"></i>Community</div>
+          <div class="navitem"><i class="ti ti-hand-love-you"></i>Prayer</div>
+          <div class="navitem"><i class="ti ti-user-circle"></i>Profile</div>
+        </div>
+      </div>
+    </div></div>
+  </figure>
+
+  <!-- SCREEN 3 -->
+  <figure class="screen">
+    <figcaption><span class="num">3</span>Chapter selection — Joshua</figcaption>
+    <div class="phone"><div class="screen-inner">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="icons"><i class="ti ti-signal-4"></i><i class="ti ti-wifi"></i><i class="ti ti-battery-4"></i></span></div>
+      <div class="content">
+        <div class="scroll">
+          <p style="font-size:11px; color:var(--ink-faint); margin:0 0 2px; font-weight:600;"><i class="ti ti-chevron-left"></i> Old Testament</p>
+          <div class="chapter-head">
+            <h2>Joshua</h2>
+            <p>24 chapters · last read ch. 22</p>
+          </div>
+          <div class="chapter-grid">
+            <div class="chapter-cell read">1</div><div class="chapter-cell read">2</div><div class="chapter-cell read">3</div><div class="chapter-cell read">4</div>
+            <div class="chapter-cell read">5</div><div class="chapter-cell read">6</div><div class="chapter-cell read">7</div><div class="chapter-cell read">8</div>
+            <div class="chapter-cell read">9</div><div class="chapter-cell read">10</div><div class="chapter-cell read">11</div><div class="chapter-cell read">12</div>
+            <div class="chapter-cell read">13</div><div class="chapter-cell read">14</div><div class="chapter-cell read">15</div><div class="chapter-cell read">16</div>
+            <div class="chapter-cell read">17</div><div class="chapter-cell read">18</div><div class="chapter-cell read">19</div><div class="chapter-cell read">20</div>
+            <div class="chapter-cell read">21</div><div class="chapter-cell current">22</div><div class="chapter-cell">23</div><div class="chapter-cell">24</div>
+          </div>
+        </div>
+        <div class="bottomnav">
+          <div class="navitem"><i class="ti ti-home"></i>Home</div>
+          <div class="navitem active"><i class="ti ti-book-2"></i>Bible</div>
+          <div class="navitem"><i class="ti ti-users"></i>Community</div>
+          <div class="navitem"><i class="ti ti-hand-love-you"></i>Prayer</div>
+          <div class="navitem"><i class="ti ti-user-circle"></i>Profile</div>
+        </div>
+      </div>
+    </div></div>
+  </figure>
+
+  <!-- SCREEN 4 -->
+  <figure class="screen">
+    <figcaption><span class="num">4</span>Reading — Joshua 22</figcaption>
+    <div class="phone"><div class="screen-inner">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="icons"><i class="ti ti-signal-4"></i><i class="ti ti-wifi"></i><i class="ti ti-battery-4"></i></span></div>
+      <div class="content">
+        <div class="scroll" style="position:relative;">
+          <div class="read-head">
+            <div class="titles"><p class="book"><i class="ti ti-chevron-left"></i> Joshua</p><p class="chap">Chapter 22</p></div>
+            <div class="translation-chip">NLT <i class="ti ti-chevron-down" style="font-size:11px;"></i></div>
+          </div>
+          <div class="read-toolbar">
+            <div class="icon-btn"><i class="ti ti-player-play"></i></div>
+            <div class="icon-btn"><i class="ti ti-bookmark"></i></div>
+            <div class="icon-btn"><i class="ti ti-heart"></i></div>
+            <div class="icon-btn"><i class="ti ti-share-3"></i></div>
+            <div class="icon-btn"><i class="ti ti-search"></i></div>
+          </div>
+          <div class="verse-text">
+            <p><span class="vnum">13</span>Then the Israelites sent Phinehas, son of Eleazar the priest, to the land of Gilead.</p>
+            <p><span class="vnum">14</span>Ten leaders accompanied him, one from each of the ten tribes, each the head of his family division.</p>
+            <p class="highlighted"><span class="vnum">15</span>When they arrived in Gilead, they said to the tribes of Reuben, Gad, and the half-tribe of Manasseh —</p>
+            <p><span class="vnum">16</span>"The whole community of the Lord demands to know why you are betraying the God of Israel this way."</p>
+            <p><span class="vnum">17</span>"Was it not enough that we sinned at Peor? We are still suffering the consequences of that plague."</p>
+          </div>
+        </div>
+        <div class="fab"><i class="ti ti-settings"></i></div>
+      </div>
+    </div></div>
+  </figure>
+
+  <!-- SCREEN 5 -->
+  <figure class="screen">
+    <figcaption><span class="num">5</span>Verse actions</figcaption>
+    <div class="phone"><div class="screen-inner">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="icons"><i class="ti ti-signal-4"></i><i class="ti ti-wifi"></i><i class="ti ti-battery-4"></i></span></div>
+      <div class="content">
+        <div class="scroll">
+          <div class="read-head"><div class="titles"><p class="book">Joshua</p><p class="chap">Chapter 22</p></div></div>
+          <div class="verse-text">
+            <p><span class="vnum">13</span>Then the Israelites sent Phinehas, son of Eleazar the priest, to the land of Gilead.</p>
+            <p><span class="vnum">14</span>Ten leaders accompanied him, one from each tribe, each the head of his family.</p>
+          </div>
+        </div>
+        <div class="sheet-backdrop">
+          <div class="sheet">
+            <div class="grabber"></div>
+            <p class="verse-preview">"When they arrived in Gilead, they said to the tribes of Reuben..." — v.15</p>
+            <div class="sheet-grid">
+              <div class="sheet-item"><i class="ti ti-heart"></i>Favorite</div>
+              <div class="sheet-item"><i class="ti ti-bookmark"></i>Save</div>
+              <div class="sheet-item"><i class="ti ti-highlight"></i>Highlight</div>
+              <div class="sheet-item"><i class="ti ti-note"></i>Add note</div>
+              <div class="sheet-item"><i class="ti ti-share-3"></i>Share</div>
+              <div class="sheet-item"><i class="ti ti-copy"></i>Copy</div>
+              <div class="sheet-item"><i class="ti ti-brain"></i>Memorize</div>
+              <div class="sheet-item"><i class="ti ti-headphones"></i>Listen</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </figure>
+
+  <!-- SCREEN 6 -->
+  <figure class="screen">
+    <figcaption><span class="num">6</span>Search the Bible</figcaption>
+    <div class="phone"><div class="screen-inner">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="icons"><i class="ti ti-signal-4"></i><i class="ti ti-wifi"></i><i class="ti ti-battery-4"></i></span></div>
+      <div class="content">
+        <div class="scroll">
+          <div class="search-bar" style="margin-top:8px;"><i class="ti ti-search"></i>hope in trials</div>
+
+          <div class="result-group-title">Suggested topics</div>
+          <div class="chip-row">
+            <div class="search-chip">Faith</div>
+            <div class="search-chip">Hope</div>
+            <div class="search-chip">Love</div>
+            <div class="search-chip">Prayer</div>
+          </div>
+
+          <div class="result-group-title">Recent searches</div>
+          <div class="recent-search-row"><i class="ti ti-history"></i>joy in suffering</div>
+          <div class="recent-search-row"><i class="ti ti-history"></i>Romans 8:28</div>
+
+          <div class="result-group-title">Verses</div>
+          <div class="result-row">
+            <div class="rtitle">Romans 5:3–4</div>
+            <div class="rtext">We can rejoice when we run into problems, for we know that they help us develop <mark>endurance and hope</mark>.</div>
+          </div>
+          <div class="result-row">
+            <div class="rtitle">James 1:2–3</div>
+            <div class="rtext">Dear brothers and sisters, when troubles come your way, consider it an opportunity for great <mark>hope</mark>.</div>
+          </div>
+
+          <div class="result-group-title">Books</div>
+          <div class="list-row" style="margin-bottom:0;"><span class="lname">Psalms</span><span class="lmeta">218 matches</span></div>
+        </div>
+      </div>
+    </div></div>
+  </figure>
+
+  <!-- SCREEN 7 -->
+  <figure class="screen">
+    <figcaption><span class="num">7</span>Translation selector</figcaption>
+    <div class="phone"><div class="screen-inner">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="icons"><i class="ti ti-signal-4"></i><i class="ti ti-wifi"></i><i class="ti ti-battery-4"></i></span></div>
+      <div class="content">
+        <div class="scroll">
+          <div class="read-head"><div class="titles"><p class="book">Joshua</p><p class="chap">Chapter 22</p></div></div>
+          <div class="verse-text">
+            <p><span class="vnum">13</span>Then the Israelites sent Phinehas, son of Eleazar the priest, to the land of Gilead.</p>
+            <p><span class="vnum">14</span>Ten leaders accompanied him, one from each tribe.</p>
+          </div>
+        </div>
+        <div class="modal-backdrop">
+          <div class="modal-card">
+            <h3>Choose translation</h3>
+            <div class="trans-row selected"><span class="tcode">NLT</span><span class="tname">New Living Translation</span><i class="ti ti-check"></i></div>
+            <div class="trans-row"><span class="tcode">KJV</span><span class="tname">King James Version</span></div>
+            <div class="trans-row"><span class="tcode">NKJV</span><span class="tname">New King James Version</span></div>
+            <div class="trans-row"><span class="tcode">NIV</span><span class="tname">New International Version</span></div>
+            <div class="trans-row"><span class="tcode">ESV</span><span class="tname">English Standard Version</span></div>
+            <div class="trans-row"><span class="tcode">NASB</span><span class="tname">New American Standard Bible</span></div>
+            <div class="trans-row"><span class="tcode">CSB</span><span class="tname">Christian Standard Bible</span></div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </figure>
+
+  <!-- SCREEN 8 -->
+  <figure class="screen">
+    <figcaption><span class="num">8</span>Audio Bible</figcaption>
+    <div class="phone"><div class="screen-inner">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="icons"><i class="ti ti-signal-4"></i><i class="ti ti-wifi"></i><i class="ti ti-battery-4"></i></span></div>
+      <div class="content">
+        <div class="scroll">
+          <div class="top-header" style="justify-content:center; position:relative;">
+            <i class="ti ti-chevron-down" style="position:absolute; left:2px; font-size:18px; color:var(--ink-faint);"></i>
+            <span style="font-size:11px; font-weight:700; color:var(--ink-faint); text-transform:uppercase; letter-spacing:0.05em;">Now playing</span>
+          </div>
+          <div class="audio-art"><i class="ti ti-book-2"></i></div>
+          <div class="audio-titles"><h2>Joshua 22</h2><p>New Living Translation · narrated</p></div>
+          <div class="audio-progress">
+            <div class="audio-track"><div class="fill"></div><div class="knob"></div></div>
+            <div class="audio-times"><span>3:12</span><span>8:24</span></div>
+          </div>
+          <div class="audio-controls">
+            <div class="side"><i class="ti ti-rewind-backward-15"></i></div>
+            <div class="play"><i class="ti ti-player-pause-filled"></i></div>
+            <div class="side"><i class="ti ti-rewind-forward-15"></i></div>
+          </div>
+          <div class="audio-meta-row">
+            <div class="am"><i class="ti ti-gauge"></i>1.0×</div>
+            <div class="am"><i class="ti ti-moon"></i>Sleep</div>
+            <div class="am"><i class="ti ti-list"></i>Queue</div>
+            <div class="am"><i class="ti ti-share-3"></i>Share</div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </figure>
+
+</div>
+</body>
+</html>
