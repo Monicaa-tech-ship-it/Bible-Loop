@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bible Loop — My Memorized Verses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" rel="stylesheet">
+<style>
+  :root{
+    /* ---- Tokens derived from the existing Bible Loop level screens ---- */
+    --bg-app:#EEF1F8;          /* neutral hub background, between the pastel level tints */
+    --navy:#1F3A5F;             /* primary — matches Level 2 header/sheet */
+    --navy-deep:#16273F;
+    --navy-tint:#E7ECF3;
+    --gold:#BE8A2A;             /* secondary accent — matches Level 4 "Check" button */
+    --gold-tint:#F6ECD8;
+    --teal:#3D8C7C;             /* success / memorized — matches Level 3 mint theme */
+    --teal-tint:#DFF0EC;
+    --lavender:#7C63A6;         /* favorites — matches Level 1 purple theme */
+    --lavender-tint:#EDE7F6;
+    --rose:#B95C6C;             /* needs review — matches Level 4 pink/maroon theme */
+    --rose-tint:#F8E3E6;
+    --card-bg:#FFFFFF;
+    --ink:#1C2430;
+    --ink-soft:#5B6472;
+    --ink-mute:#9AA3B2;
+    --hairline:#E6E9F0;
+    --r-lg:22px;
+    --r-md:14px;
+    --r-pill:999px;
+    --shadow:0 10px 26px rgba(31,58,95,0.10), 0 2px 8px rgba(31,58,95,0.06);
+  }
+
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0;}
+  body{
+    background:#D8DCE6;
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    padding:32px 12px 60px;
+  }
+
+  .material-symbols-outlined{
+    font-variation-settings:'opsz' 20,'wght' 400,'FILL' 0,'GRAD' 0;
+    font-size:20px;
+    line-height:1;
+  }
+
+  /* ---------- prototype chrome (outside the device) ---------- */
+  .proto-label{
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:#7A8394;
+    margin-bottom:14px;
+  }
+  .proto-toggle{
+    display:flex;
+    gap:8px;
+    margin-top:22px;
+    background:#C7CCDA;
+    padding:4px;
+    border-radius:var(--r-pill);
+  }
+  .proto-toggle button{
+    border:none;
+    background:transparent;
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    font-weight:600;
+    color:#4B5566;
+    padding:8px 16px;
+    border-radius:var(--r-pill);
+    cursor:pointer;
+  }
+  .proto-toggle button.on{
+    background:var(--navy);
+    color:#fff;
+  }
+
+  /* ---------- device frame ---------- */
+  .device{
+    width:390px;
+    max-width:100%;
+    background:var(--bg-app);
+    border-radius:44px;
+    padding:14px 14px 0;
+    box-shadow:0 24px 60px rgba(20,30,50,0.28);
+    border:6px solid #12151C;
+    overflow:hidden;
+    position:relative;
+  }
+  .screen{
+    background:var(--bg-app);
+    border-radius:30px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    min-height:780px;
+  }
+
+  /* ---------- status bar ---------- */
+  .status-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 22px 6px;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    color:var(--ink);
+  }
+  .status-icons{display:flex; gap:6px; align-items:center;}
+
+  /* ---------- header ---------- */
+  .app-header{
+    padding:6px 20px 18px;
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+  }
+  .icon-btn{
+    width:38px; height:38px;
+    border-radius:12px;
+    background:#fff;
+    border:none;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--navy);
+    box-shadow:0 3px 8px rgba(31,58,95,0.10);
+    cursor:pointer;
+    flex:none;
+  }
+  .header-text{flex:1; padding-top:2px;}
+  .header-text h1{
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    font-size:21px;
+    color:var(--navy-deep);
+    margin:0 0 4px;
+    letter-spacing:-.01em;
+  }
+  .header-text p{
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    font-weight:500;
+    color:var(--ink-soft);
+    margin:0;
+    line-height:1.4;
+  }
+  .count-badge{
+    flex:none;
+    text-align:center;
+    background:#fff;
+    border-radius:14px;
+    padding:6px 10px;
+    box-shadow:0 3px 8px rgba(31,58,95,0.10);
+  }
+  .count-badge .num{
+    display:block;
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    font-size:16px;
+    color:var(--teal);
+  }
+  .count-badge .label{
+    display:block;
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    color:var(--ink-mute);
+    margin-top:1px;
+  }
+
+  /* ---------- search ---------- */
+  .search-wrap{padding:0 20px 14px;}
+  .search-bar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:#fff;
+    border-radius:var(--r-pill);
+    padding:11px 16px;
+    box-shadow:0 3px 10px rgba(31,58,95,0.07);
+  }
+  .search-bar .material-symbols-outlined{color:var(--ink-mute);}
+  .search-bar input{
+    border:none;
+    outline:none;
+    background:transparent;
+    font-family:'Inter',sans-serif;
+    font-size:13.5px;
+    font-weight:500;
+    color:var(--ink);
+    width:100%;
+  }
+  .search-bar input::placeholder{color:var(--ink-mute); font-weight:500;}
+
+  /* ---------- filter chips ---------- */
+  .chips-row{
+    display:flex;
+    gap:8px;
+    padding:0 20px 18px;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .chips-row::-webkit-scrollbar{display:none;}
+  .chip{
+    flex:none;
+    font-family:'Inter',sans-serif;
+    font-size:12.5px;
+    font-weight:600;
+    padding:9px 15px;
+    border-radius:var(--r-pill);
+    border:1.5px solid transparent;
+    background:#fff;
+    color:var(--ink-soft);
+    cursor:pointer;
+    white-space:nowrap;
+    display:flex;
+    align-items:center;
+    gap:5px;
+  }
+  .chip .dot{width:6px; height:6px; border-radius:50%;}
+  .chip.active{
+    background:var(--navy);
+    color:#fff;
+    box-shadow:0 4px 10px rgba(31,58,95,0.25);
+  }
+  .chip.c-recent .dot{background:var(--teal);}
+  .chip.c-review .dot{background:var(--rose);}
+  .chip.c-fav .dot{background:var(--lavender);}
+
+  /* ---------- content scroll area ---------- */
+  .content{
+    flex:1;
+    overflow-y:auto;
+    padding:0 20px 26px;
+  }
+
+  /* ---------- verse card ---------- */
+  .verse-card{
+    background:var(--card-bg);
+    border-radius:var(--r-lg);
+    padding:16px 16px 14px;
+    margin-bottom:14px;
+    box-shadow:var(--shadow);
+  }
+  .card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+  }
+  .badge-memorized{
+    display:flex; align-items:center; gap:4px;
+    background:var(--teal-tint);
+    color:var(--teal);
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    font-weight:700;
+    padding:5px 10px 5px 8px;
+    border-radius:var(--r-pill);
+  }
+  .badge-memorized .material-symbols-outlined{font-size:14px;}
+  .card-icons{display:flex; align-items:center; gap:10px;}
+  .mastery-stars{
+    font-size:12px;
+    letter-spacing:1px;
+    color:var(--gold);
+    font-weight:600;
+  }
+  .mastery-stars .dim{color:#E3D6BB;}
+  .mastery-pct{
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    font-weight:700;
+    color:var(--gold);
+    background:var(--gold-tint);
+    padding:4px 9px;
+    border-radius:var(--r-pill);
+  }
+  .fav-btn{
+    background:none; border:none; cursor:pointer;
+    color:var(--lavender);
+    display:flex;
+    padding:0;
+  }
+  .fav-btn.inactive{color:var(--ink-mute);}
+
+  .ref-row{display:flex; align-items:baseline; gap:8px; margin-bottom:6px;}
+  .ref-row h2{
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    font-size:17px;
+    color:var(--navy-deep);
+    margin:0;
+  }
+  .translation-pill{
+    font-family:'Inter',sans-serif;
+    font-size:10.5px;
+    font-weight:700;
+    color:var(--navy);
+    background:var(--navy-tint);
+    padding:3px 8px;
+    border-radius:6px;
+    letter-spacing:.02em;
+  }
+
+  .verse-preview{
+    font-family:'Inter',sans-serif;
+    font-size:13.5px;
+    font-weight:400;
+    color:var(--ink-soft);
+    line-height:1.55;
+    margin:0 0 10px;
+  }
+
+  .meta-row{
+    display:flex; align-items:center; gap:5px;
+    font-family:'Inter',sans-serif;
+    font-size:11.5px;
+    font-weight:500;
+    color:var(--ink-mute);
+    margin-bottom:12px;
+  }
+  .meta-row .material-symbols-outlined{font-size:14px; color:var(--ink-mute);}
+
+  .divider{height:1px; background:var(--hairline); margin-bottom:12px;}
+
+  .action-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
+  }
+  .action-btn{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px;
+    background:var(--bg-app);
+    border:none;
+    border-radius:var(--r-md);
+    padding:9px 4px;
+    cursor:pointer;
+    color:var(--navy);
+  }
+  .action-btn .material-symbols-outlined{font-size:18px;}
+  .action-btn span.lbl{
+    font-family:'Inter',sans-serif;
+    font-size:10px;
+    font-weight:600;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- needs review section ---------- */
+  .section-heading{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin:18px 0 10px;
+  }
+  .section-heading h3{
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    font-size:15px;
+    color:var(--navy-deep);
+    margin:0;
+    display:flex; align-items:center; gap:6px;
+  }
+  .section-heading h3 .material-symbols-outlined{color:var(--rose); font-size:18px;}
+  .section-heading .see-all{
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    font-weight:700;
+    color:var(--navy);
+    background:none; border:none; cursor:pointer;
+  }
+
+  .review-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:var(--rose-tint);
+    border-radius:var(--r-md);
+    padding:12px 14px;
+    margin-bottom:10px;
+  }
+  .review-item h4{
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    font-size:14px;
+    color:var(--navy-deep);
+    margin:0 0 3px;
+  }
+  .review-item p{
+    font-family:'Inter',sans-serif;
+    font-size:11.5px;
+    font-weight:500;
+    color:var(--rose);
+    margin:0;
+  }
+  .review-btn{
+    font-family:'Inter',sans-serif;
+    font-size:11.5px;
+    font-weight:700;
+    color:#fff;
+    background:var(--rose);
+    border:none;
+    padding:9px 14px;
+    border-radius:var(--r-pill);
+    cursor:pointer;
+    flex:none;
+  }
+
+  /* ---------- empty state ---------- */
+  .empty-state{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    padding:64px 30px 40px;
+  }
+  .empty-state svg{margin-bottom:20px;}
+  .empty-state h3{
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    font-size:16px;
+    color:var(--navy-deep);
+    margin:0 0 8px;
+  }
+  .empty-state p{
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    font-weight:500;
+    color:var(--ink-soft);
+    line-height:1.5;
+    margin:0 0 22px;
+  }
+  .primary-btn{
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    font-weight:700;
+    color:#fff;
+    background:var(--navy);
+    border:none;
+    padding:13px 26px;
+    border-radius:var(--r-pill);
+    cursor:pointer;
+    box-shadow:0 8px 18px rgba(31,58,95,0.28);
+  }
+
+  .populated{display:block;}
+</style>
+</head>
+<body>
+
+  <div class="proto-label">Bible Loop — Prototype · My Memorized Verses</div>
+
+  <div class="device">
+    <div class="screen">
+
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-icons">
+          <span class="material-symbols-outlined" style="font-size:15px;">signal_cellular_alt</span>
+          <span class="material-symbols-outlined" style="font-size:15px;">wifi</span>
+          <span class="material-symbols-outlined" style="font-size:15px;">battery_full</span>
+        </div>
+      </div>
+
+      <div class="app-header">
+        <button class="icon-btn" aria-label="Back">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <div class="header-text">
+          <h1>My Memorized Verses</h1>
+          <p>Review and strengthen the verses you've already learned.</p>
+        </div>
+        <div class="count-badge">
+          <span class="num">24</span>
+          <span class="label">Learned</span>
+        </div>
+      </div>
+
+      <div class="search-wrap">
+        <div class="search-bar">
+          <span class="material-symbols-outlined">search</span>
+          <input type="text" placeholder="Search by book or reference" />
+        </div>
+      </div>
+
+      <div class="chips-row">
+        <button class="chip active">All</button>
+        <button class="chip c-recent"><span class="dot"></span>Recently Memorized</button>
+        <button class="chip c-review"><span class="dot"></span>Needs Review</button>
+        <button class="chip c-fav"><span class="dot"></span>Favorites</button>
+      </div>
+
+      <div class="content">
+
+        <!-- ===== populated state ===== -->
+        <div id="populatedView" class="populated">
+
+          <div class="verse-card">
+            <div class="card-top">
+              <span class="badge-memorized"><span class="material-symbols-outlined">check_circle</span>Memorized</span>
+              <div class="card-icons">
+                <span class="mastery-stars">★★★★<span class="dim">★</span></span>
+                <button class="fav-btn"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">favorite</span></button>
+              </div>
+            </div>
+            <div class="ref-row">
+              <h2>Ephesians 3:20</h2>
+              <span class="translation-pill">NIV</span>
+            </div>
+            <p class="verse-preview">Now to him who is able to do immeasurably more than all we ask or imagine, according to his power that is at work within us&hellip;</p>
+            <div class="meta-row">
+              <span class="material-symbols-outlined">event_available</span>
+              <span>Memorized Jul 12, 2026</span>
+            </div>
+            <div class="divider"></div>
+            <div class="action-row">
+              <button class="action-btn"><span class="material-symbols-outlined">menu_book</span><span class="lbl">Read</span></button>
+              <button class="action-btn"><span class="material-symbols-outlined">psychology</span><span class="lbl">Recall</span></button>
+              <button class="action-btn"><span class="material-symbols-outlined">sports_esports</span><span class="lbl">Play Again</span></button>
+              <button class="action-btn"><span class="material-symbols-outlined">volume_up</span><span class="lbl">Listen</span></button>
+            </div>
+          </div>
+
+          <div class="verse-card">
+            <div class="card-top">
+              <span class="badge-memorized"><span class="material-symbols-outlined">check_circle</span>Memorized</span>
+              <div class="card-icons">
+                <span class="mastery-pct">90% Mastered</span>
+                <button class="fav-btn inactive"><span class="material-symbols-outlined">favorite</span></button>
+              </div>
+            </div>
+            <div class="ref-row">
+              <h2>Psalm 23:1</h2>
+              <span class="translation-pill">NIV</span>
+            </div>
+            <p class="verse-preview">The Lord is my shepherd, I lack nothing.</p>
+            <div class="meta-row">
+              <span class="material-symbols-outlined">event_available</span>
+              <span>Memorized Jul 3, 2026</span>
+            </div>
+            <div class="divider"></div>
+            <div class="action-row">
+              <button class="action-btn"><span class="material-symbols-outlined">menu_book</span><span class="lbl">Read</span></button>
+              <button class="action-btn"><span class="material-symbols-outlined">psychology</span><span class="lbl">Recall</span></button>
+              <button class="action-btn"><span class="material-symbols-outlined">sports_esports</span><span class="lbl">Play Again</span></button>
+              <button class="action-btn"><span class="material-symbols-outlined">volume_up</span><span class="lbl">Listen</span></button>
+            </div>
+          </div>
+
+          <div class="verse-card">
+            <div class="card-top">
+              <span class="badge-memorized"><span class="material-symbols-outlined">check_circle</span>Memorized</span>
+              <div class="card-icons">
+                <span class="mastery-stars">★★★<span class="dim">★★</span></span>
+                <button class="fav-btn"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">favorite</span></button>
+              </div>
+            </div>
+            <div class="ref-row">
+              <h2>Philippians 4:13</h2>
+              <span class="translation-pill">NIV</span>
+            </div>
+            <p class="verse-preview">I can do all this through him who gives me strength.</p>
+            <div class="meta-row">
+              <span class="material-symbols-outlined">event_available</span>
+              <span>Memorized Jun 21, 2026</span>
+            </div>
+            <div class="divider"></div>
+            <div class="action-row">
+              <button class="action-btn"><span class="material-symbols-outlined">menu_book</span><span class="lbl">Read</span></button>
+              <button class="action-btn"><span class="material-symbols-outlined">psychology</span><span class="lbl">Recall</span></button>
+              <button class="action-btn"><span class="material-symbols-outlined">sports_esports</span><span class="lbl">Play Again</span></button>
+              <button class="action-btn"><span class="material-symbols-outlined">volume_up</span><span class="lbl">Listen</span></button>
+            </div>
+          </div>
+
+          <div class="section-heading">
+            <h3><span class="material-symbols-outlined">history_toggle_off</span>Needs Review</h3>
+            <button class="see-all">See all</button>
+          </div>
+
+          <div class="review-item">
+            <div>
+              <h4>Romans 8:28</h4>
+              <p>Last reviewed 21 days ago</p>
+            </div>
+            <button class="review-btn">Review Now</button>
+          </div>
+
+          <div class="review-item">
+            <div>
+              <h4>Isaiah 41:10</h4>
+              <p>Last reviewed 14 days ago</p>
+            </div>
+            <button class="review-btn">Review Now</button>
+          </div>
+
+        </div>
+
+        <!-- ===== empty state ===== -->
+        <div id="emptyView" class="empty-state">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="60" cy="60" r="60" fill="#E7ECF3"/>
+            <path d="M38 40C38 37.79 39.79 36 42 36H58V84H42C39.79 84 38 82.21 38 80V40Z" fill="#FFFFFF" stroke="#1F3A5F" stroke-width="2.5"/>
+            <path d="M82 40C82 37.79 80.21 36 78 36H62V84H78C80.21 84 82 82.21 82 80V40Z" fill="#FFFFFF" stroke="#1F3A5F" stroke-width="2.5"/>
+            <line x1="60" y1="40" x2="60" y2="84" stroke="#1F3A5F" stroke-width="2.5"/>
+            <line x1="44" y1="46" x2="54" y2="46" stroke="#BE8A2A" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="44" y1="53" x2="54" y2="53" stroke="#BE8A2A" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="66" y1="46" x2="76" y2="46" stroke="#BE8A2A" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="66" y1="53" x2="76" y2="53" stroke="#BE8A2A" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          <h3>You haven't memorized any verses yet.</h3>
+          <p>Finish a verse game and it will show up here so you can revisit and strengthen it anytime.</p>
+          <button class="primary-btn">Start Memorizing</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="proto-toggle">
+    <button id="btnPopulated" class="on">Populated</button>
+    <button id="btnEmpty">Empty state</button>
+  </div>
+
+  <script>
+    const populatedView = document.getElementById('populatedView');
+    const emptyView = document.getElementById('emptyView');
+    const btnPopulated = document.getElementById('btnPopulated');
+    const btnEmpty = document.getElementById('btnEmpty');
+
+    btnPopulated.addEventListener('click', () => {
+      populatedView.style.display = 'block';
+      emptyView.style.display = 'none';
+      btnPopulated.classList.add('on');
+      btnEmpty.classList.remove('on');
+    });
+    btnEmpty.addEventListener('click', () => {
+      populatedView.style.display = 'none';
+      emptyView.style.display = 'flex';
+      btnEmpty.classList.add('on');
+      btnPopulated.classList.remove('on');
+    });
+
+    // favorite toggle interaction
+    document.querySelectorAll('.fav-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.classList.toggle('inactive');
+        const icon = btn.querySelector('.material-symbols-outlined');
+        const isActive = !btn.classList.contains('inactive');
+        icon.style.fontVariationSettings = isActive ? "'FILL' 1" : "'FILL' 0";
+      });
+    });
+
+    // filter chip active state
+    document.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
